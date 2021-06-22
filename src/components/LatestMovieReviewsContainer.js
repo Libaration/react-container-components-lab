@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "isomorphic-fetch";
 import MovieReviews from "./MovieReviews";
+require("regenerator-runtime/runtime");
 
 const NYT_API_KEY = "gBqMNBCux6IfZq5kHqI9aGj8IZaC7Onu";
 const URL =
@@ -26,7 +27,7 @@ class LatestMovieReviewsContainer extends Component {
     const response = await fetch(URL);
     const reviews = await response.json();
     this.setState({ reviews: reviews.results });
-    console.log(this.state);
+    // console.log(this.state);
   }
 }
 

@@ -8,9 +8,43 @@ const URL =
   `api-key=${NYT_API_KEY}`;
 
 class SearchableMovieReviewsContainer extends Component {
-  render() {
-    return <div></div>;
+  constructor() {
+    super();
+    this.state = {
+      reviews: [],
+      searchTerm: "",
+    };
   }
+  render() {
+    return (
+      <div className="searchable-movie-reviews">
+        <form>
+          <input
+            type="text"
+            value={this.state.searchTerm}
+            onChange={(e) => this.handleChange(e)}
+          />
+          <input type="submit" onClick={(e) => this.searchReviews(e)} />
+        </form>
+        <MovieReviews reviews={this.state.reviews} />
+      </div>
+    );
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      searchTerm: e.target.value,
+    });
+  };
+
+  searchReviews = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${URL}&query=${this.state.searchTerm}`);
+    const reviews = await response.json();
+    this.setState({
+      reviews: reviews.results,
+    });
+  };
 }
 
 export default SearchableMovieReviewsContainer;
